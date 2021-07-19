@@ -38,6 +38,8 @@ public class Users {
 	@Temporal(TemporalType.DATE)
 	private Date JoinedDate;
 	
+	
+	
 	//getters and setters
 
 	public long getUserId() {

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +24,8 @@ import java.util.Map;
 
 
 
-//mark class as Controller  
+//mark class as Controller 
+@CrossOrigin(origins = {"http://localhost:3000" , "http://localhost:8080"})
 @RestController
 @RequestMapping("/api/v1")
 public class BookController {
@@ -35,7 +37,8 @@ public class BookController {
     //get book. creating a get mapping that retrieves all the books detail from the database
 	@GetMapping("/books")
 	public List<Book> getAllBook() {    
-	    return this.bookRepository.findAll();
+	    List<Book> x= this.bookRepository.findAll();
+	    return x;
 	}  
 	
    //get book by id
@@ -49,7 +52,7 @@ public class BookController {
 	}
 	
 	//save book
-	@PostMapping("books")
+	@PostMapping("/books")
 	public Book createBook(@RequestBody Book book) {
 		return this.bookRepository.save(book);
 	
@@ -74,6 +77,7 @@ public class BookController {
         final Book updatedBook = bookRepository.save(book);
         return ResponseEntity.ok(updatedBook);
 	}
+	
 	
 	 //delete book
 	@DeleteMapping("/books/{id}")

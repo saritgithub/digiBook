@@ -40,17 +40,41 @@ public class Book {
 	private String issuer;
 	private int dateOfIssue;
 	
+//	@OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "BORROW_ID")
+//     private Borrow borrow;
+	
 	@Enumerated(value=EnumType.STRING)
     @Column(name="CATEGORY")
     private Category category;
 	
 	@ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "BOOK_AUTHOR",
-               joinColumns = @JoinColumn(name = "BOOK_ID"),
-               inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID"))
+	@JoinTable(name = "BOOK_AUTHOR",
+    joinColumns = @JoinColumn(name = "BOOK_ID"),
+    inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID"))
     protected Set<Author> authors = new HashSet<>();
+	
+	
+	
 
 	//constructors
+	
+
+
+	
+	
+
+//	public Book(String bookTitle, String bookDescription, String issuer, int dateOfIssue, Borrow borrow,
+//			Category category, Set<Author> authors) {
+//		
+//		this.bookTitle = bookTitle;
+//		this.bookDescription = bookDescription;
+//		this.issuer = issuer;
+//		this.dateOfIssue = dateOfIssue;
+//		this.borrow = borrow;
+//		this.category = category;
+//		this.authors = authors;
+//	}
 	
 	public Book() {
 		
@@ -69,9 +93,11 @@ public class Book {
 
 	//getters and setters
 
+	
 	public String getBookTitle() {
 		return bookTitle;
 	}
+
 
 	public void setBookTitle(String bookTitle) {
 		this.bookTitle = bookTitle;
@@ -124,11 +150,22 @@ public class Book {
 
 	public void setAuthors(Set<Author> authors) {
 		this.authors = authors;
+		
 	}
+	
+//	public Borrow getBorrow() {
+//		return borrow;
+//	}
+//
+//	public void setBorrow(Borrow borrow) {
+//		this.borrow = borrow;
+//	}
+
 	
 	// hashCode() and equals()
 
-	@Override
+	
+	/*@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -181,7 +218,7 @@ public class Book {
 		} else if (!issuer.equals(other.issuer))
 			return false;
 		return true;
-	}
+	}*/
 	
 
 }

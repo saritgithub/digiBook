@@ -2,8 +2,8 @@ package com.digibook.springbootcrud.model;
 
 	import java.util.Date;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
+    import javax.persistence.CascadeType;
+    import javax.persistence.Column;
 	import javax.persistence.Entity;
 	import javax.persistence.GeneratedValue;
 	import javax.persistence.GenerationType;
@@ -15,6 +15,11 @@ import javax.persistence.Column;
 	import javax.persistence.Temporal;
 	import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 	@Entity
 	@Table(name = "BORROWS")
 
@@ -25,10 +30,26 @@ import javax.persistence.Column;
 		@Column(name = "BORROW_ID")
 		private long borrowId;
 		
-		@Temporal(TemporalType.TIMESTAMP)
+		
+		
+		/*@Temporal(TemporalType.TIMESTAMP)
+		@Column(name = "TAKEN_DATE")
+		@CreatedDate
 		private Date takenDate;
 		
+		
+		
 		@Temporal(TemporalType.TIMESTAMP)
+		@Column(name = "RETURN_DATE")
+		@LastModifiedDate
+		private Date returnDate;*/
+		
+		@CreationTimestamp
+		@Column(name="taken_Date", nullable=false, updatable=false)
+		private Date takenDate;
+		
+		
+		@Column(name="return_Date")
 		private Date returnDate;
 		
 		 @OneToOne(cascade = CascadeType.ALL)
@@ -48,10 +69,13 @@ import javax.persistence.Column;
 		public void setBorrowId(long borrowId) {
 			this.borrowId = borrowId;
 		}
+		 
+		 
 
 		public Date getTakenDate() {
 			return takenDate;
 		}
+
 
 		public void setTakenDate(Date takenDate) {
 			this.takenDate = takenDate;
