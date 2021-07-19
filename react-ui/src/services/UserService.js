@@ -8,8 +8,12 @@ class UserService {
       return axios.get(USER_REST_API_URL);
     }
 
-    createUsers(user){
+    async createUsers(user){
         return axios.post(USER_REST_API_URL,user);
+      
+    }
+    async loginUser(user){
+      return axios.post(USER_REST_API_URL,user);
     }
 
 }

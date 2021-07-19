@@ -25,7 +25,8 @@ class BorrowComponent extends Component {
 
 
     componentDidMount(){
-        BorrowService.getBorrows().then((res) => {
+        const userId = localStorage.getItem('userId');
+        BorrowService.getBorrows(userId).then((res) => {
             this.setState({ borrows: res.data});
         });
 
@@ -33,7 +34,7 @@ class BorrowComponent extends Component {
     render() {
         return (
             <div>
-            <h2 className = "text-center">List of Borrow Books</h2>
+            <h2 className = "text-center">List of Borrowed Books</h2>
             <div className = "row">
                 <table className = "table table-striped table-bordered">
                     <thead>
@@ -54,10 +55,12 @@ class BorrowComponent extends Component {
                                 <tr key = {borrow.id}>
                                     <td> { borrow.borrowId} </td>
                                     <td> { borrow.takenDate} </td>
-                                    <td> { borrow.bookTitle} </td>
+                                    <td> { borrow.book.bookTitle} </td>
+
                                     
                                     <td>
-                                    <button style={{marginLeft: "10px"}} onClick={ () => this.deleteBorrow(borrow.borrowId)} className="btn btn-danger">Return Book </button>
+                                        
+                                    <button style={{marginLeft: "10px"}} onClick={ () =>{ this.deleteBorrow(borrow.borrowId)}} className="btn btn-danger">Return Book </button>
                                     </td> 
                                 </tr>
                             )

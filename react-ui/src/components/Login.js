@@ -5,28 +5,30 @@ class Login extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {userName: '',
+        this.state = {email: '',
                      password: '',
             
     }
-    this.changeUsernameHandler = this.changeUsernameHandler.bind(this);
+    this.changeEmailHandler = this.changeEmailHandler.bind(this);
     this.changePasswordHandler = this.changePasswordHandler.bind(this);
     this.resetLoginForm = this.resetLoginForm.bind(this);
 }
 
 resetLoginForm = (e) => {
     e.preventDefault();
-    let user = {userName: this.state.userName, password: this.state.password};
-    console.log('user => ' + JSON.stringify(user));
+    let user = {email: this.state.email, password: this.state.password};
+    //console.log('user => ' + JSON.stringify(user));
 
-    UserService.createUsers(user).then(res=>{
-        this.props.history.push('/user');
+    UserService.loginUser(user).then(res=>{
+        console.log(res);
+        localStorage.setItem('userId',res.data.userId);
+        this.props.history.push('/books');
         
     });
 }   
 
-changeUsernameHandler= (event) => {
-    this.setState({userName:event.target.value});
+changeEmailHandler= (event) => {
+    this.setState({email:event.target.value});
 }
 
 changePasswordHandler= (event) => {
@@ -44,9 +46,9 @@ changePasswordHandler= (event) => {
 
                             <form>
                                 <div className = "form-group">
-                                    <label> Username</label>
-                                    <input placeholder="Enter Username" name="userName" className="form-control" 
-                                            value={this.state.userName} onChange={this.changeUsernameHandler}/>
+                                    <label> Email</label>
+                                    <input placeholder="Enter Email" name="email" className="form-control" 
+                                            value={this.state.email} onChange={this.changeEmailHandler}/>
                                 </div>
                                 <div className = "form-group">
                                         <label> Password: </label>

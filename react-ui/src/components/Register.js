@@ -8,22 +8,27 @@ class Register extends Component {
         this.state = {
             firstName: '',
             lastName: '',
-            email: ''
+            email: '',
+            password: '',
+            
                 
         }
         this.changeFirstNameHandler = this.changeFirstNameHandler.bind(this);
         this.changeLastNameHandler = this.changeLastNameHandler.bind(this);
+        this.changePasswordHandler = this.changePasswordHandler.bind(this);
         this.saveUser = this.saveUser.bind(this);
     
     }
 
     saveUser = (e) => {
         e.preventDefault();
-        let user = {firstName: this.state.firstName, lastName: this.state.lastName, email: this.state.email};
-        console.log('user => ' + JSON.stringify(user));
+        let user = {firstName: this.state.firstName, lastName: this.state.lastName, email: this.state.email, password: this.state.password};
+    
 
         UserService.createUsers(user).then(res=>{
-            this.props.history.push('/user');
+            console.log(res);
+            localStorage.setItem('userId',res.data.userId);
+            this.props.history.push('/books');
             
         });
     }
@@ -37,6 +42,9 @@ class Register extends Component {
     }
     changeEmailHandler= (event) => {
         this.setState({email: event.target.value});
+    }
+    changePasswordHandler= (event) => {
+        this.setState({password: event.target.value});
     }
     render() {
         return (
@@ -62,6 +70,11 @@ class Register extends Component {
                                             <label> Email: </label>
                                             <input placeholder="Email" name="email" className="form-control" 
                                                 value={this.state.email} onChange={this.changeEmailHandler}/>
+                                        </div>
+                                        <div className = "form-group">
+                                            <label> Password: </label>
+                                            <input placeholder="Password" name="password" className="form-control" 
+                                                value={this.state.password} onChange={this.changePasswordHandler}/>
                                         </div>
 
                                         <button className="btn btn-success" onClick={this.saveUser}>Register</button>

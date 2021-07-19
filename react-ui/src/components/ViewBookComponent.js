@@ -4,12 +4,14 @@ import BookService from "../services/BookService";
 
 class ViewBookComponent extends Component {
     constructor(props) {
+        console.log('111');
         super(props)
-
         this.state = {
-            id: this.props.match.params.id,
+            bookId: this.props.location.state.bookId,
             books: {}
         }
+
+        this.borrowBook = this.borrowBook.bind(this);
     
     }
 
@@ -18,6 +20,10 @@ class ViewBookComponent extends Component {
             this.setState({ books: res.data});
         })
 
+    }
+
+    borrowBook(bookId){
+        this.props.history.push({pathname:`/borrow-details/${bookId}`,state :{'bookId':bookId}});
     }
     render() {
         return (
@@ -39,6 +45,9 @@ class ViewBookComponent extends Component {
                             <label> Issuer: </label>
                             <div> { this.state.books.issuer }</div>
                         </div>
+                        <div className = "row">
+                    <button className="btn btn-primary" onClick={this.borrowBook(this.state.books.bookId)}> Borrow Book</button>
+                       </div>
                     </div>
 
                 </div>

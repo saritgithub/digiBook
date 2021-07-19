@@ -15,16 +15,15 @@ class BookComponent extends Component {
                 
         }
 
-        this.borrowDetails = this.borrowDetails.bind(this);
+        this.viewBorrow = this.viewBorrow.bind(this);
         this.borrowList = this.borrowList.bind(this);
+        
 
     }
-    viewBook(bookId){
-    this.props.history.push(`/view-book/${bookId}`);
-    }
+    
 
-    borrowDetails(borrowId){
-    this.props.history.push(`/borrow-details/${borrowId}`);
+    viewBorrow(bookId){
+    this.props.history.push({pathname:`/borrow-details/${bookId}`,state :{'bookId':bookId}});
         }
 
     borrowList(){
@@ -44,7 +43,7 @@ class BookComponent extends Component {
             <div>
                 <h2 className = "text-center">Book List</h2>
                 <div className = "row">
-                <button className= "btn btn-primary" onClick= {this.borrowList}> My borrow books</button>
+                <button className= "btn btn-primary" onClick= {this.borrowList}> My borrowed books</button>
                 </div>
                 <br></br>
 
@@ -74,8 +73,12 @@ class BookComponent extends Component {
                                         <td> { book.dateOfIssue} </td>
                                         <td> { book.category} </td>
                                         
+                                       
+                                        
                                         <td>
-                                        <button style={{marginLeft: "10px"}} onClick={ () => this.viewBook(book.bookId)} className="btn btn-info">Book Details </button>
+                                       
+                                        <button style={{marginLeft: "10px"}} onClick={ () => {this.viewBorrow(book.bookId)}} className="btn btn-info">Borrow Book </button>
+                                        
                                         
                                         </td>
                                         
